@@ -1,101 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ITI Lab - Task Submission Queue</title>
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
     <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <!-- CSS File -->
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <header>
-        <div class="logo-area">
-            <i class="fa-solid fa-graduation-cap logo-icon"></i>
-            <div class="header-title">
-                <h1>ITI Lab Assistant</h1>
-                <p>Task Submission Queue System</p>
-            </div>
+      <div class="logo-area">
+        <i class="fa-solid fa-graduation-cap logo-icon"></i>
+        <div class="header-title">
+          <h1>ITI Lab Assistant</h1>
+          <p>Task Submission Queue System</p>
         </div>
-        <div class="live-clock" id="live-clock">00:00:00</div>
+      </div>
+      <div class="live-clock" id="live-clock">00:00:00</div>
     </header>
 
     <main>
-        <!-- Left: Student Registration -->
-        <section class="card registration-card">
-            <h2><i class="fa-solid fa-user-plus"></i> Join Queue</h2>
-            <form id="join-form">
-                <div class="form-group">
-                    <label for="studentName">Student Name *</label>
-                    <input type="text" id="studentName" placeholder="Enter full name" required autocomplete="off">
-                </div>
-                <!-- Task Name not required anymore -->
-                <div class="form-group">
-                    <label for="taskName">Task / Lab ID <small style="font-weight: normal; color:#777;">(Optional)</small></label>
-                    <input type="text" id="taskName" placeholder="e.g. JavaScript Lab 1">
-                </div>
-                <!-- New PIN Field -->
-                <div class="form-group">
-                    <label for="studentPin">Secret PIN *</label>
-                    <input type="password" id="studentPin" placeholder="Set a pin (e.g. 1234)" required maxlength="6" pattern="[0-9]*" inputmode="numeric">
-                    <p class="pin-note">You will need this PIN to remove yourself from the list.</p>
-                </div>
+      <!-- Left: Student Registration -->
+      <section class="card registration-card">
+        <h2><i class="fa-solid fa-user-plus"></i> Join Queue</h2>
+        <form id="join-form">
+          <div class="form-group">
+            <label for="studentName">Student Name *</label>
+            <input
+              type="text"
+              id="studentName"
+              placeholder="Enter full name"
+              required
+              autocomplete="off"
+            />
+          </div>
+          <!-- Task Name not required anymore -->
+          <div class="form-group">
+            <label for="taskName"
+              >Task / Lab ID
+              <small style="font-weight: normal; color: #777"
+                >(Optional)</small
+              ></label
+            >
+            <input
+              type="text"
+              id="taskName"
+              placeholder="e.g. JavaScript Lab 1"
+            />
+          </div>
+          <!-- New PIN Field -->
+          <div class="form-group">
+            <label for="studentPin">Secret PIN *</label>
+            <input
+              type="password"
+              id="studentPin"
+              placeholder="Set a pin (e.g. 1234)"
+              required
+              maxlength="6"
+              pattern="[0-9]*"
+              inputmode="numeric"
+            />
+            <p class="pin-note">
+              You will need this PIN to remove yourself from the list.
+            </p>
+          </div>
 
-                <button type="submit" class="btn btn-primary">
-                    <i class="fa-solid fa-ticket"></i> Get Ticket
-                </button>
-            </form>
-            <div style="margin-top: 1.5rem; padding: 1rem; background: #e8f4fc; border-radius: 8px; border-left: 4px solid var(--accent-color);">
-                <small><strong>Note to Students:</strong> Please prepare your code and IDE before your turn. Each student has 5 minutes.</small>
-            </div>
-        </section>
+          <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-ticket"></i> Get Ticket
+          </button>
+        </form>
+        <div
+          style="
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #e8f4fc;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+          "
+        >
+          <small
+            ><strong>Note to Students:</strong> Please prepare your code and IDE
+            before your turn. Each student has 5 minutes.</small
+          >
+        </div>
+      </section>
 
-        <!-- Center: Status & Instructor Controls -->
-        <section class="status-area">
-            <div class="card current-student-display">
-                <div class="status-badge">Now Presenting</div>
-                <div id="current-display-content">
-                    <!-- Javascript will inject content here -->
-                    <h1 class="current-name empty-state">Waiting for instructor...</h1>
-                </div>
-            </div>
+      <!-- Center: Status & Instructor Controls -->
+      <section class="status-area">
+        <div class="card current-student-display">
+          <div class="status-badge">Now Presenting</div>
+          <div id="current-display-content">
+            <!-- Javascript will inject content here -->
+            <h1 class="current-name empty-state">Waiting for instructor...</h1>
+          </div>
+        </div>
 
-            <div class="card controls-card">
-                <h2><i class="fa-solid fa-chalkboard-user"></i> Instructor Controls</h2>
-                <div class="control-buttons">
-                    <button id="next-btn" class="btn btn-success">
-                        <i class="fa-solid fa-bell"></i> Call Next
-                    </button>
-                    <button id="reset-btn" class="btn btn-danger">
-                        <i class="fa-solid fa-trash-can"></i> Reset All
-                    </button>
-                </div>
-            </div>
-        </section>
+        <div class="card controls-card">
+          <h2>
+            <i class="fa-solid fa-chalkboard-user"></i> Instructor Controls
+          </h2>
+          <div class="control-buttons">
+            <button id="next-btn" class="btn btn-success">
+              <i class="fa-solid fa-bell"></i> Call Next
+            </button>
+            <button id="reset-btn" class="btn btn-danger">
+              <i class="fa-solid fa-trash-can"></i> Reset All
+            </button>
+          </div>
+        </div>
+      </section>
 
-        <!-- Right: The Queue -->
-        <section class="card queue-card">
-            <h2><i class="fa-solid fa-list-ol"></i> Waiting List</h2>
-            <div class="queue-stats">
-                <span>Waiting: <b id="count-val">0</b></span>
-                <span>Est. Time: <b id="time-val">0 min</b></span>
-            </div>
-            <div class="queue-list-container">
-                <ul class="queue-list" id="queue-list-ul">
-                    <!-- Queue items go here -->
-                </ul>
-                <div id="empty-queue-msg" style="text-align: center; color: #999; margin-top: 2rem; display: none;">
-                    No students in queue.
-                </div>
-            </div>
-        </section>
+      <!-- Right: The Queue -->
+      <section class="card queue-card">
+        <h2><i class="fa-solid fa-list-ol"></i> Waiting List</h2>
+        <div class="queue-stats">
+          <span>Waiting: <b id="count-val">0</b></span>
+          <span>Est. Time: <b id="time-val">0 min</b></span>
+        </div>
+        <div class="queue-list-container">
+          <ul class="queue-list" id="queue-list-ul">
+            <!-- Queue items go here -->
+          </ul>
+          <div
+            id="empty-queue-msg"
+            style="
+              text-align: center;
+              color: #999;
+              margin-top: 2rem;
+              display: none;
+            "
+          >
+            No students in queue.
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- JS File -->
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
